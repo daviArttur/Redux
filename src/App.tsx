@@ -1,56 +1,55 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { FormEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import fetchUser from './api/getUserApi';
+import fetchToken from './api/getTokenApi';
+
+// Store
+import { store } from './store/configureStore';
+
 
 function App() {
+  const [username, setUsername] = React.useState<string>('')
+  const [password, setPassowrd] = React.useState<string>('');
+  const state = useSelector((state) => state)
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    const key = window.localStorage.getItem('token')
+    const keyIsTrue = window.localStorage.getItem('token') ? key : null
+    
+    if (key) {
+      console.log(123)
+      store.dispatch(fetchUser)
+    }
+  }, [state])
+
+  function handleinputNameChange(event: FormEvent<HTMLInputElement>) {
+    const value = event.currentTarget.value
+    setUsername(value)
+  }
+
+  function handleinputPasswordChange(event: FormEvent<HTMLInputElement>) {
+    const value = event.currentTarget.value
+    setPassowrd(value)
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    store.dispatch(fetchToken({username, password}))
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="name">Nome:</label>
+          <input onChange={handleinputNameChange} type="text" id='name' />
+        </div>
+        <div>
+        <label htmlFor="password">Senha:</label>
+          <input onChange={handleinputPasswordChange} type="text" id='password' />
+        </div>
+        <button type='submit'>Entrar</button>
+      </form>
     </div>
   );
 }
