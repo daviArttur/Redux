@@ -9,7 +9,6 @@ interface tokenActionInterface extends actionInterface {
 }
 
 const getTokenMiddleware = (store: storeInterface) => (next: Dispatch<tokenActionInterface>) => (action: tokenActionInterface) =>{
-  console.log('Action type => ', action)
   return next(action)
 }
 

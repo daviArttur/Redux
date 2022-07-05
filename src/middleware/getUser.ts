@@ -10,7 +10,6 @@
 
 const getTokenMiddleware = (store: any) => (next: any) => (action: any) =>{
   if (typeof action.type === 'function') {
-    console.log(action.type)
     return action.type(store.dispatch)
   }
   return next(action)

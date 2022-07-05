@@ -4,23 +4,28 @@ import fetchUser from './api/getUserApi';
 import fetchToken from './api/getTokenApi';
 
 // Store
-import { store } from './store/configureStore';
+import store, { RootState } from './store/configureStore';
 
 
 function App() {
   const [username, setUsername] = React.useState<string>('')
   const [password, setPassowrd] = React.useState<string>('');
-  const state = useSelector((state) => state)
-  const dispatch = useDispatch()
-  React.useEffect(() => {
-    const key = window.localStorage.getItem('token')
-    const keyIsTrue = window.localStorage.getItem('token') ? key : null
-    
-    if (key) {
-      console.log(123)
-      store.dispatch(fetchUser)
+
+  const state = useSelector((state: RootState) => state);
+
+  React.useLayoutEffect(() => {
+    verifyUserTokenInLocalStorage()
+  }, [])
+
+  const tokenIsTrue = React.useRef(false)
+
+  function verifyUserTokenInLocalStorage() {
+    const key = window.localStorage.getItem('token');
+    if (key && tokenIsTrue.current === false) {
+      tokenIsTrue.current = true
+      store.dispatch(fetchUser(key))
     }
-  }, [state])
+  }
 
   function handleinputNameChange(event: FormEvent<HTMLInputElement>) {
     const value = event.currentTarget.value
@@ -37,6 +42,7 @@ function App() {
     store.dispatch(fetchToken({username, password}))
   }
 
+
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
@@ -50,6 +56,12 @@ function App() {
         </div>
         <button type='submit'>Entrar</button>
       </form>
+
+      <div>
+        {state.getUser.data && (
+          <p>{state.getUser.data.email}</p>
+        )}
+      </div>
     </div>
   );
 }

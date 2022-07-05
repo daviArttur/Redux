@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type userType = string
+type userType = { 
+  id: number
+  username: string
+  nome: string
+  email: string
+}
 
 interface initialStateInterface {
   data: null | userType,
@@ -14,13 +19,6 @@ interface initialStateInterface {
   }
 }
 
-interface actionUserStartedType {
-  payload: {
-    username: string
-    password: string
-  };
-  type: string
-}
 
 const initialState: initialStateInterface = {
   data: null,
@@ -35,10 +33,10 @@ const initialState: initialStateInterface = {
 }
 
 const getUser = createSlice({
-  name: 'getToken',
+  name: 'getUser',
   initialState,
   reducers :{
-    userFetchStarted(state, action: actionUserStartedType) {
+    userFetchStarted(state) {
       state.meta.loading = true
     },
     userFecthSucess(state, action) {

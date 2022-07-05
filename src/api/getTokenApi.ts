@@ -1,29 +1,14 @@
 import getToken from '../store/getToken';
 import { Dispatch } from "react"
 import { AnyAction } from 'redux';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import fetchUser from './getUserApi';
+import store  from '../store/configureStore';
+
 
 type userType = {
   username: string,
   password: string
 }
-// const fetchToken = createAsyncThunk(
-//   'users/fetchByIdStatus',
-//   async (userId: any, thunkAPI) => {
-//     const response = await fetch(
-//       'https://dogsapi.origamid.dev/json/jwt-auth/v1/token',
-//       {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({username: 'dog', password: 'dog'}),
-//       },
-//     );
-//     console.log(response)
-//     return response
-//   }
-// )
 
 const fetchToken = (user: userType) => async (dispatch: Dispatch<AnyAction>) => {
   try {
@@ -42,6 +27,7 @@ const fetchToken = (user: userType) => async (dispatch: Dispatch<AnyAction>) => 
     if (token) {
       window.localStorage.setItem('token', token)
       dispatch(getToken.actions.tokenFecthSucess(token))
+      store.dispatch(fetchUser(token))
       return true
     }
     throw new Error("Error");
