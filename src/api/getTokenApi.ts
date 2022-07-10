@@ -3,6 +3,8 @@ import { Dispatch } from "react"
 import { AnyAction } from 'redux';
 import fetchUser from './getUserApi';
 import store  from '../store/configureStore';
+import loading from '../store/loading';
+
 
 
 type userType = {

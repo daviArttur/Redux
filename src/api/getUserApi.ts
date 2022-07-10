@@ -3,7 +3,8 @@ import store from '../store/configureStore';
 
 // Store
 import getUser from '../store/getUser';
-
+import loading from '../store/loading';
+import openModal from '../store/openModal';
 
 const fetchUser = (token: any) => async (dispatch: any) => {
   try {
@@ -17,6 +18,7 @@ const fetchUser = (token: any) => async (dispatch: any) => {
     const data = await response.json();
     if (data) {
       store.dispatch(getUser.actions.userFecthSucess(data))
+      store.dispatch(openModal.actions.setOpenModal('components/Feed'))
       return true
     }
     throw new Error("Error");

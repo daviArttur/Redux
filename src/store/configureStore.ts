@@ -1,14 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
-import getToken from "./getToken";
-import getTokenMiddleware from "../middleware/getToken";
-import getUser from "./getUser";
 
-export type RootState = ReturnType<typeof store.getState>
+import getTokenMiddleware from "../middleware/getToken";
+
+// Store
+import getUser from "./getUser";
+import getToken from "./getToken";
+import openModal from './openModal'
+import loading from './loading'
+
+export type RootStateType = ReturnType<typeof store.getState>
 
 const store = configureStore({
   reducer: {
-    getToken: getToken.reducer,
-    getUser: getUser.reducer
+    token: getToken.reducer,
+    user: getUser.reducer,
+    openModal: openModal.reducer,
+    loading: loading.reducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(getTokenMiddleware)
 })

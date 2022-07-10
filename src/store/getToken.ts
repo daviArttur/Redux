@@ -6,7 +6,6 @@ interface initialStateInterface {
   data: null | tokenType,
   error: boolean,
   meta: {
-    loading: boolean,
     user: {
       name: string,
       password: string
@@ -26,7 +25,6 @@ const initialState: initialStateInterface = {
   data: null,
   error: false,
   meta: {
-    loading: false,
     user: {
       name: '',
       password: ''
@@ -39,16 +37,13 @@ const getToken = createSlice({
   initialState,
   reducers :{
     tokenFetchStarted(state, action: actionTokenStartedType) {
-      state.meta.loading = true
       state.meta.user.name = action.payload.username
       state.meta.user.password = action.payload.password
     },
     tokenFecthSucess(state, action) {
-      state.meta.loading = false
       state.data = action.payload
     },
     tokenFetchError(state) {
-      state.meta.loading = false
       state.data = null
       state.error = true
     }

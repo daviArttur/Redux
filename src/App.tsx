@@ -1,69 +1,30 @@
-import React, { FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import fetchUser from './api/getUserApi';
-import fetchToken from './api/getTokenApi';
+import { useSelector } from 'react-redux';
 
 // Store
-import store, { RootState } from './store/configureStore';
+import store, { RootStateType } from './store/configureStore';
 
+// Components
+import Form from './components/Form';
+import Feed from './components/feed/Feed';
+import Loading from './components/Loading';
+
+// Const to Check Open Page
+import { listOpenModal } from './store/openModal';
 
 function App() {
-  const [username, setUsername] = React.useState<string>('')
-  const [password, setPassowrd] = React.useState<string>('');
 
-  const state = useSelector((state: RootState) => state);
+  const state = useSelector((state: RootStateType) => state)
+  const openPage = state.openModal.page
 
-  React.useLayoutEffect(() => {
-    verifyUserTokenInLocalStorage()
-  }, [])
+  console.log(state)
 
-  const tokenIsTrue = React.useRef(false)
-
-  function verifyUserTokenInLocalStorage() {
-    const key = window.localStorage.getItem('token');
-    if (key && tokenIsTrue.current === false) {
-      tokenIsTrue.current = true
-      store.dispatch(fetchUser(key))
-    }
-  }
-
-  function handleinputNameChange(event: FormEvent<HTMLInputElement>) {
-    const value = event.currentTarget.value
-    setUsername(value)
-  }
-
-  function handleinputPasswordChange(event: FormEvent<HTMLInputElement>) {
-    const value = event.currentTarget.value
-    setPassowrd(value)
-  }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    store.dispatch(fetchToken({username, password}))
-  }
-
-
+  if (openPage === listOpenModal.feed) return <Feed/>
+  if (state.loading.loading === true) return <Loading />
+  
   return (
-    <div className="App">
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Nome:</label>
-          <input onChange={handleinputNameChange} type="text" id='name' />
-        </div>
-        <div>
-        <label htmlFor="password">Senha:</label>
-          <input onChange={handleinputPasswordChange} type="text" id='password' />
-        </div>
-        <button type='submit'>Entrar</button>
-      </form>
-
-      <div>
-        {state.getUser.data && (
-          <p>{state.getUser.data.email}</p>
-        )}
-      </div>
-    </div>
-  );
+    <Form />
+  )
+  
 }
 
 export default App;

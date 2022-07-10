@@ -12,10 +12,6 @@ interface initialStateInterface {
   error: boolean,
   meta: {
     loading: boolean,
-    user: {
-      name: string,
-      password: string
-    }
   }
 }
 
@@ -25,10 +21,6 @@ const initialState: initialStateInterface = {
   error: false,
   meta: {
     loading: false,
-    user: {
-      name: '',
-      password: ''
-    }
   }
 }
 
@@ -47,6 +39,9 @@ const getUser = createSlice({
       state.meta.loading = false
       state.data = null
       state.error = true
+    },
+    userDisconect(state) {
+      state.data = null
     }
   }
 })
