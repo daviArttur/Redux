@@ -1,7 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import getTokenMiddleware from "../middleware/getToken";
-
 // Store
 import getUser from "./getUser";
 import getToken from "./getToken";
@@ -17,7 +15,7 @@ const store = configureStore({
     openModal: openModal.reducer,
     loading: loading.reducer
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(getTokenMiddleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 })
 
 export default store
