@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 // Store
-import store, { RootStateType } from './store/configureStore';
+import { RootStateType } from './store/configureStore';
 
 // Components
 import Form from './components/Form';

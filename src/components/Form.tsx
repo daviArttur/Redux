@@ -1,5 +1,5 @@
 import React, { FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import fetchUser from '../api/getUserApi';
 import fetchToken from '../api/getTokenApi';
 
