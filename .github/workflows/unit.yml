@@ -1,9 +1,9 @@
-name: Cypress
+name: TestingLibrary
 
 on: [ push ]
 
 jobs:
-  cypress:
+  testingLibrary:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -11,4 +11,4 @@ jobs:
           fetch-depth: 0
       - run: npm i
       - run: npm start & 
-      - run: npm run cypress:run
+      - run: npm test
