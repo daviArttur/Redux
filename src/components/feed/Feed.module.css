@@ -2,7 +2,6 @@
   align-items: center;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 90px;
 }
 
 .photoContainer {
@@ -40,13 +39,5 @@ p {
   font-size: 1rem;
   font-weight: 600;
   justify-self: center;
-}
-
-.buttonFetch {
-  align-self: flex-end;
-  border-radius: 100%;
-  height: 2rem; 
-  margin-bottom: 10vh;
-  width: 2rem;
 }
 

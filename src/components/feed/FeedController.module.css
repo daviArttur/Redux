@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.buttonFetch {
+  align-self: flex-end;
+  border-radius: 100%;
+  height: 2rem; 
+  margin-bottom: 10vh;
+  width: 2rem;
+}

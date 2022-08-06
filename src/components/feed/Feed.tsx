@@ -1,15 +1,11 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { RootStateType } from '../../store/configureStore'
 
 // Api
 import getPhotos from '../../api/getPhotos'
 
-// Components
-import Loading from '../Loading'
-
 // Styles
 import styles from './Feed.module.css'
+import stylesLoading from '../../styles/loadingPhotos.module.css'
 
 interface photoObjectValuesInterface {
   title: string,
@@ -19,33 +15,30 @@ interface photoObjectValuesInterface {
   acessos: string
 }
 
-function Feed() {
+type Props = {
+  index: number
+}
 
-  const [photos, setPhotos] = React.useState<photoObjectValuesInterface[] | null>(null);
-  const [countPagePhotos, setCountPagePhotos] = React.useState<number>(1)
-  const state = useSelector((state: RootStateType) => state)
-
-  function handleClick() {
-    setCountPagePhotos(countPagePhotos + 1)
-  }
+function Feed({ index }: Props) {
+  const [ loading, setLoading ] = React.useState<boolean>(false)
+  const [ photos, setPhotos ] = React.useState<photoObjectValuesInterface[] | null>(null);
 
   React.useEffect(() => {
-
     const awaitPhotos = async () => {
-      const newPhotos = await getPhotos(countPagePhotos)
-
-      if (!photos) {
-        setPhotos([...newPhotos])
-         
-      } else {
-        setPhotos([...photos, ...newPhotos])
-      }
+      setLoading(true)
+      const newPhotos = await getPhotos(index)
+      setPhotos([...newPhotos])
+      setLoading(false)
     }
     awaitPhotos()
-  }, [countPagePhotos])
+  }, [index])
 
 
-  if (state.loading.loading) return <Loading/>
+  if (loading) return (
+  <div className={stylesLoading.load}>
+    <hr/><hr/><hr/><hr/>
+  </div>
+  )
 
   return (
     <section className={styles.container} style={{display: 'flex', flexWrap: 'wrap'}}>
@@ -54,14 +47,12 @@ function Feed() {
         <div key={photo.id} className={styles.photoContainer}>
           <img className={styles.img} src={photo.src} alt={`Foto do ${photo.title}`}/>
           <div className={styles.bio}>
-            <strong>{photo.title}</strong>
-            <p>{photo.acessos}</p>
+            <strong data-testid="photoTitle">{photo.title}</strong>
+            <p data-testid="photoViews">{photo.acessos}</p>
           </div>
         </div>
       )
     })}
-
-    <button className={styles.buttonFetch} onClick={handleClick}>+</button>
     </section>
   )
   
