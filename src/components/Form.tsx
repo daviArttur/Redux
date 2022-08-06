@@ -1,10 +1,9 @@
 import React, { FormEvent } from 'react';
-import { useSelector } from 'react-redux';
 import fetchUser from '../api/getUserApi';
 import fetchToken from '../api/getTokenApi';
 
 // Store
-import store, { RootStateType } from '../store/configureStore';
+import store from '../store/configureStore';
 
 // Styles
 import styles from './Form.module.css'
@@ -14,7 +13,6 @@ function Form() {
   const [username, setUsername] = React.useState<string>('')
   const [password, setPassowrd] = React.useState<string>('');
 
-  const state = useSelector((state: RootStateType) => state);
 
   React.useLayoutEffect(() => {
     verifyUserTokenInLocalStorage()
@@ -30,12 +28,12 @@ function Form() {
     }
   }
 
-  function handleinputNameChange(event: FormEvent<HTMLInputElement>) {
+  function handleInputNameChange(event: FormEvent<HTMLInputElement>) {
     const value = event.currentTarget.value
     setUsername(value)
   }
 
-  function handleinputPasswordChange(event: FormEvent<HTMLInputElement>) {
+  function handleInputPasswordChange(event: FormEvent<HTMLInputElement>) {
     const value = event.currentTarget.value
     setPassowrd(value)
   }
@@ -45,17 +43,26 @@ function Form() {
     store.dispatch(fetchToken({username, password}))
   }
 
-
   return (
     <div className="App">
-      <form onSubmit={handleSubmit} className={styles.container}>
+      <form onSubmit={handleSubmit} className={styles.container} data-testid="form">
         <div className={styles.div}>
           <label htmlFor="name">Nome:</label>
-          <input onChange={handleinputNameChange} type="text" id='name' />
+          <input onChange={handleInputNameChange} 
+            type="text" 
+            id='name' 
+            name='nome' 
+            data-testid="inputName"
+           />
         </div>
         <div className={styles.div}>
         <label htmlFor="password">Senha:</label>
-          <input onChange={handleinputPasswordChange} type="text" id='password' />
+          <input onChange={handleInputPasswordChange} 
+            type="password" 
+            id='password' 
+            name='senha'
+            data-testid="inputPassword"
+             />
         </div>
         <button type='submit'>Entrar</button>
       </form>
