@@ -1,0 +1,28 @@
+.load{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 256px;
+  height:50px;
+}
+
+.load hr{
+  border:0;
+  margin: 2px;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  animation:spin 0.3s ease infinite
+}
+
+.load :first-child{background:#FB1;animation-delay:-1.5s}
+.load :nth-child(2){background:#000;animation-delay:-1s}
+.load :nth-child(3){background:#FB1;animation-delay:-0.5s}
+.load :last-child{background:#000}
+
+@keyframes spin{
+  0%,100%{transform:translate(0)}
+  25%{transform:translate(0%)}
+  50%{transform:translate(0%, 25%)}
+  75%{transform:translate(0, 50%)}
+}
