@@ -1,0 +1,14 @@
+name: Cypress
+
+on: [ push ]
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: npm i
+      - run: npm start & 
+      - run: npm run cypress:run
