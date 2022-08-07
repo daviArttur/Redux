@@ -3,7 +3,6 @@ import Feed from './Feed'
 
 // Styles
 import styles from './FeedController.module.css'
-import stylesLoading from '../../styles/loadingPhotos.module.css'
 
 const FeedController = () => {
 
@@ -14,13 +13,12 @@ const FeedController = () => {
   }
 
   return (
-    <main className={styles.main + " " + stylesLoading} style={ { marginTop: "90px" }}>
-      {countPagePhotos && countPagePhotos.map((index) => (
-        <Feed index={index}/>
+    <main className={styles.main} style={ { marginTop: "90px" }}>
+      {countPagePhotos && countPagePhotos.map((index, key) => (
+        <Feed index={index} key={key}/>
       ))}
       <button onClick={handleClick} className={styles.buttonFetch}>+</button>
     </main>
-
   )
 }
 
