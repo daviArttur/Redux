@@ -1,10 +1,9 @@
+// Type and Redux
 import getToken from '../store/getToken';
-import { Dispatch } from "react"
-import { AnyAction } from 'redux';
-import fetchUser from './getUserApi';
-import store  from '../store/configureStore';
-import loading from '../store/loading';
+import store, { DispatchType }  from '../store/configureStore';
 
+// Api
+import fetchUser from './getUserApi';
 
 
 type userType = {
@@ -12,7 +11,7 @@ type userType = {
   password: string
 }
 
-const fetchToken = (user: userType) => async (dispatch: Dispatch<AnyAction>) => {
+const fetchToken = (user: userType) => async (dispatch: DispatchType) => {
   try {
     dispatch(getToken.actions.tokenFetchStarted(user))
     const response = await fetch(
@@ -21,7 +20,7 @@ const fetchToken = (user: userType) => async (dispatch: Dispatch<AnyAction>) => 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        },
+        },  
         body: JSON.stringify(user),
       },
     );
@@ -32,20 +31,11 @@ const fetchToken = (user: userType) => async (dispatch: Dispatch<AnyAction>) => 
       store.dispatch(fetchUser(token))
       return true
     }
-    throw new Error("Error");
-
+    throw new Error(`${response.status}`);
   } catch (error) {
     dispatch(getToken.actions.tokenFetchError())
+    return error
   }
 };
 
 export default fetchToken
-
-
-// const response = await fetch('https://dogsapi.origamid.dev/json/api/user', {
-//   method: 'GET',
-//   headers: {
-//     Authorization: 'Bearer ' + token,
-//   },
-// });
-// const data = await response.json();
