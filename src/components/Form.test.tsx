@@ -29,12 +29,12 @@ test("the user's login, must save the token and data in the store, then disappea
   await waitFor(() => {
     const tokenInStore = store.getState().token.data
     expect(tokenInStore).toBeTruthy()
-  }, { timeout: 2500})
+  }, { timeout: 4000})
 
   await waitFor(() => {
     const dataUserInStore = store.getState().user.data
     expect(dataUserInStore).toBeTruthy()
-  }, { timeout: 2500})
+  }, { timeout: 4000})
 
   waitForElementToBeRemoved(form).then(() => {
     return "Removed"
