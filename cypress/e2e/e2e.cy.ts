@@ -5,11 +5,11 @@ it("E2E test aplication", () => {
   cy.get("form")
 
   // type input name
-  cy.get('[data-testid="inputName"]')
+  cy.get('input#name')
     .type(Cypress.env("username"))
 
   // type input password
-  cy.get('[data-testid="inputPassword"]')
+  cy.get('input#password')
     .type(Cypress.env("password"))
 
   clickInButton("Entrar")
