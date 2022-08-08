@@ -1,12 +1,13 @@
-import { createAsyncThunk, isAsyncThunkAction } from '@reduxjs/toolkit';
 import store from '../store/configureStore';
 
 // Store
 import getUser from '../store/getUser';
-import loading from '../store/loading';
 import openModal from '../store/openModal';
 
-const fetchUser = (token: any) => async (dispatch: any) => {
+// Type
+import { DispatchType } from '../store/configureStore';
+
+const fetchUser = (token: string) => async (dispatch: DispatchType) => {
   try {
    dispatch(getUser.actions.userFetchStarted())
     const response = await fetch('https://dogsapi.origamid.dev/json/api/user', {
@@ -22,9 +23,9 @@ const fetchUser = (token: any) => async (dispatch: any) => {
       return true
     }
     throw new Error("Error");
-
   } catch (error) {
     store.dispatch(getUser.actions.userFetchError())
+    return error
   }
 };
 
