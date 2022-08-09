@@ -5,7 +5,6 @@ import { RootStateType } from './store/configureStore';
 
 // Components
 import Form from './components/Form';
-import Feed from './components/feed/Feed';
 import Loading from './components/Loading';
 
 // Const to Check Open Page
