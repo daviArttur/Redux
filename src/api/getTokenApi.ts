@@ -1,6 +1,6 @@
 // Type and Redux
 import getToken from '../store/getToken';
-import store, { DispatchType }  from '../store/configureStore';
+import store from '../store/configureStore';
 
 // Api
 import fetchUser from './getUserApi';
@@ -11,7 +11,7 @@ type userType = {
   password: string
 }
 
-const fetchToken = (user: userType) => async (dispatch: DispatchType) => {
+const fetchToken = (user: userType) => async (dispatch: any) => {
   try {
     dispatch(getToken.actions.tokenFetchStarted(user))
     const response = await fetch(
