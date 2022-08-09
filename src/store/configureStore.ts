@@ -7,13 +7,13 @@ import openModal from './openModal'
 import loading from './loading'
 
 export type RootStateType = ReturnType<typeof store.getState>
-
+export type DispatchType = typeof store.dispatch
 const store = configureStore({
   reducer: {
     token: getToken.reducer,
     user: getUser.reducer,
     openModal: openModal.reducer,
-    loading: loading.reducer
+    loading: loading.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 })
