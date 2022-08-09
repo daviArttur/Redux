@@ -48,7 +48,8 @@ function Form() {
       <form onSubmit={handleSubmit} className={styles.container} data-testid="form">
         <div className={styles.div}>
           <label htmlFor="name">Nome:</label>
-          <input onChange={handleInputNameChange} 
+          <input onChange={handleInputNameChange}
+            className="inputName"
             type="text" 
             id='name' 
             name='nome' 
@@ -57,7 +58,8 @@ function Form() {
         </div>
         <div className={styles.div}>
         <label htmlFor="password">Senha:</label>
-          <input onChange={handleInputPasswordChange} 
+          <input onChange={handleInputPasswordChange}
+            className="inputPassword"
             type="password" 
             id='password' 
             name='senha'
